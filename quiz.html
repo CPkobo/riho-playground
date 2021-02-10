@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>パタトクカシーー</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>隠れている言葉は何かな？？？</h1>
+    <h2>{{ text }}</h2>
+    <input v-model="ans1" placeholder="こたえ1"/>
+    <input v-model="ans2" placeholder="こたえ2"/>
+    <button @click="answer">回答</button>
+    <p>{{ message }}</p>
+    <button v-if="message === '正解'" @click="reset">もう一度</button>
+  </div>
+  <script>
+    var objs1 = [
+      'パトカー',
+      'シマウマ',
+      'スリッパ',
+      'パソコン',
+      'コーヒー'
+    ]
+    var objs2 = [
+      'タクシー',
+      'ペンギン',
+      'サンダル',
+      'ワープロ',
+      'ジュース'
+    ]
+    var app = {
+      el: '#app',
+      data: {
+        key1: 0,
+        key2: 0,
+        objNums: 0,
+        objs1,
+        objs2,
+        obj1: '',
+        obj2: '',
+        ans1: '',
+        ans2: '',
+        message: '',
+      },
+      created() {
+        this.objNums = this.objs1.length
+        this.reset()
+      },
+      computed: {
+        text() {
+          var text_ = ''
+          for (let i = 0; i < this.objNums-1; i++) {
+            text_ = text_ + this.obj1[i] + this.obj2[i]
+          }
+          return text_
+        }
+      },
+      methods: {
+        reset() {
+          this.ans1 = ''
+          this.ans2 = ''
+          this.message = ''
+          this.key1 = this.getRandomInt(0, this.objNums)
+          this.obj1 = this.objs1[this.key1]
+          this.key2 = this.getRandomInt(0, this.objNums)
+          this.obj2 = this.objs2[this.key2]
+        },
+        getRandomInt(min, max) {
+          min = Math.ceil(min)
+          max = Math.floor(max)
+          return Math.floor(Math.random() * (max - min) + min)
+        },
+        answer() {
+          if (this.ans1 === this.obj1 && this.ans2 === this.obj2) {
+            this.message = "正解"
+          } else {
+            this.message = "不正解"
+          }
+        }
+      }
+    }
+    var vm = new Vue(app)
+  </script>
+</body>
+</html>

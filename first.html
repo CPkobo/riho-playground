@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>パタトクカシーー</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <input v-model="obj1" />
+    <input v-model="obj2" />
+    <p>{{ text }}</p>
+  </div>
+  <script>
+    var app = {
+      el: '#app',
+      data: {
+        obj1: 'パトカー',
+        obj2: 'タクシー',
+      },
+      computed: {
+        text() {
+          var shorter = this.obj1.length <= this.obj2.length ? this.obj1.length : this.obj2.length
+          var text_ = ''
+          for (let i = 0; i < shorter; i++) {
+            text_ = text_ + this.obj1[i] + this.obj2[i]
+          }
+          return text_
+        }
+      }
+    }
+    var vm = new Vue(app)
+  </script>
+</body>
+</html>
